@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <getopt.h>
-#include <mergesort.h>
+#include "mergesort.h"
 
 void readfile(){
 
