@@ -4,7 +4,27 @@
 #include <getopt.h>
 #include "mergesort.h"
 
-void readfile(){
+void readfile(char *fileX, char *ftype){
+    FILE *file = fopen(fileX, "r");
+    if (file == NULL) {
+        printf("Error: Cannot open '%s'. No such file or directory.\n", fileX);
+        return EXIT_FAILURE;
+    }
+    char *buffer[1024];
+    for (int i = 0; i < 1024; i++) {
+        buffer[i] = (char*)calloc(66, sizeof(char));
+    }
+    
+
+    int c = 0;
+    while (fgets(buffer[c], 66, file)) {
+        
+    }
+    
+    
+    
+    char *inttp = "i";
+    char *dbltp = "d";
 
 }
 
@@ -16,13 +36,15 @@ void usage(){
 }
 
 int main(int argc, char *argv[]) {
-//160,533
+//216940
+//160757'
+    
     if (argc == 1){
         usage();
         return EXIT_FAILURE;
-
-    } else if(argv[1] != '-' && argc == 2) {
-        readfile();
+    } else if(*(argv[1]) == '-' && argc == 2) {
+        printf("Error: No input file specified.");
+        return EXIT_FAILURE;
 
     } else {
         int opt;
@@ -32,7 +54,7 @@ int main(int argc, char *argv[]) {
                 if (argc == 2){
                     usage();
                 } else {
-                    readfile();
+                    readfile(argv[2],"i");
                 }
                 break;
         
@@ -40,7 +62,7 @@ int main(int argc, char *argv[]) {
                 if (argc == 2){
                     usage();
                 } else {
-                    readfile();
+                    readfile(argv[2], "d");
                 }
                 break;
 
@@ -53,5 +75,5 @@ int main(int argc, char *argv[]) {
 
         }
     }
-    return 0;
+    return EXIT_SUCCESS;
 }
