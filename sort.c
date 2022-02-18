@@ -4,29 +4,6 @@
 #include <getopt.h>
 #include "mergesort.h"
 
-void readfile(char *fileX, char *ftype){
-    FILE *file = fopen(fileX, "r");
-    if (file == NULL) {
-        printf("Error: Cannot open '%s'. No such file or directory.\n", fileX);
-        return EXIT_FAILURE;
-    }
-    char *buffer[1024];
-    for (int i = 0; i < 1024; i++) {
-        buffer[i] = (char*)calloc(66, sizeof(char));
-    }
-    
-
-    int c = 0;
-    while (fgets(buffer[c], 66, file)) {
-        
-    }
-    
-    
-    
-    char *inttp = "i";
-    char *dbltp = "d";
-
-}
 
 void usage(){
     printf("Usage: ./sort [-i][-d] filename\n");
@@ -48,24 +25,21 @@ int main(int argc, char *argv[]) {
 
     } else {
         int opt;
+        int mode = 0;
         while ((opt = getopt(argc, argv, "id")) != -1) {
             switch (opt) {
             case 'i':
+                mode =1;
                 if (argc == 2){
                     usage();
-                } else {
-                    readfile(argv[2],"i");
-                }
+                } 
                 break;
-        
             case 'd':
+            mode=2;
                 if (argc == 2){
                     usage();
-                } else {
-                    readfile(argv[2], "d");
-                }
+                } 
                 break;
-
             default:
                 fprintf(stderr, "Error: Uknown option '-%s' recieved\n", argv[1]);
                 usage();
@@ -75,5 +49,55 @@ int main(int argc, char *argv[]) {
 
         }
     }
+
+    FILE *file = fopen(argv[2], "r");
+    if (file == NULL) {
+        printf("Error: Cannot open '%s'. No such file or directory.\n", file);
+        return EXIT_FAILURE;
+    }
+    void* ptr; //points to int array to pass to mergesort
+    size_t c = 0;//len
+    size_t elem_sz=0;//elemsz
+    int (pintr*)(const void*, const void*); //pointer to int/dbl_cmp
+    
+    if (mode == 1) {  //ints
+        //declare int array and count
+        
+        int* array = (int*)malloc(sizeof(int)*1024);
+
+        while( fscanf(file, "%d",array[c]) != EOF){
+            c++;
+            //set up mergesort parameters for int
+            
+        }
+        ptr = array;
+        elem_sz = 4; 
+        pintr = &int_cmp;
+    } else if (mode == 2){ //doubles
+        double array[1024];
+
+        while( fscanf(file, "%lf",array[c]) != EOF){
+            c++;
+            //set up mergesort parameters for int
+            
+        }
+        ptr = array;
+        elem_sz = 8;
+        pintr=&dbl_cmp;
+    }
+    mergesort(ptr,c,elem_sz,pintr);
+    //print the sorted array
+
+    if (mode == 1) {
+        for(size_t i = 0; i < c; i++){
+            printf("%d", *((int*)ptr+i);
+        }
+    } else if (mode == 2) {
+        for(size_t i = 0; i < c; i++){
+            printf("%lf", *((double*)ptr+i);
+        }
+    }
+    free(array);
+    fclose(file);
     return EXIT_SUCCESS;
 }
