@@ -2,7 +2,7 @@
 int int_cmp(const void* a, const void* b);
 int dbl_cmp(const void* a, const void* b);
 
-/* Main sorting algorithm you need to implement */
+/* Main sorting algorithm */
 void mergesort(void* array,
                size_t len,
                size_t ekem_sz,
